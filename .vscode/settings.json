@@ -64,7 +64,8 @@
     },
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
-        "*.sln": "*.csproj"
+        "*.sln": "*.csproj",
+        "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "2d-game-CLightwood451.sln"
+    "dotnet.defaultSolution": "2d-game-CLightwood451-main.slnx"
 }
