@@ -8,11 +8,10 @@ public class Restart : MonoBehaviour
     
     void Awake()
     {
-        // Singleton pattern - only one GameManager
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Persist between scenes
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -22,7 +21,6 @@ public class Restart : MonoBehaviour
     
     void Update()
     {
-        // Check for R key press to restart scene
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartCurrentScene();

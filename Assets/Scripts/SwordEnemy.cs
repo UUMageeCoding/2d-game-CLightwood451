@@ -169,7 +169,6 @@ public class SwordEnemy : MonoBehaviour
         animator.SetBool("IsWalking", isChasing && !isAttacking && !isDead);
     }
 
-    // Health system for the enemy
     public void TakeDamage(int damage)
     {
         if (isDead) return;

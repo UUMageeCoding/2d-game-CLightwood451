@@ -21,7 +21,6 @@ public class HealthBarUI : MonoBehaviour
 
     void Start()
     {
-        // If player is not assigned, try to find it
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -40,14 +39,12 @@ public class HealthBarUI : MonoBehaviour
 
     void Update()
     {
-        // Update health bar if player health component exists
         if (playerHealth != null)
         {
             UpdateHealthBar(playerHealth.currentHealth);
         }
         else
         {
-            // Try to find player health component if we lost reference
             if (player != null)
             {
                 playerHealth = player.GetComponent<PlayerHealth>();
@@ -57,27 +54,23 @@ public class HealthBarUI : MonoBehaviour
 
     void UpdateHealthBar(float currentHealth)
     {
-        // Update slider value
         if (healthSlider != null)
         {
             healthSlider.value = currentHealth / maxHealth;
         }
 
-        // Update fill color based on health percentage
         if (fillImage != null)
         {
             float healthPercent = currentHealth / maxHealth;
             fillImage.color = Color.Lerp(lowHealthColor, fullHealthColor, healthPercent);
         }
 
-        // Update text if assigned
         if (healthText != null)
         {
             healthText.text = $"{currentHealth}/{maxHealth}";
         }
     }
 
-    // Public method to update health bar from external scripts
     public void SetHealth(float currentHealth, float maxHealthValue)
     {
         maxHealth = maxHealthValue;

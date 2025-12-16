@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         
-        // Update health bar on start
         UpdateHealthBar();
     }
 
@@ -41,7 +40,6 @@ public class PlayerHealth : MonoBehaviour
         
         Debug.Log($"Player took {damageAmount} damage! Current health: {currentHealth}");
         
-        // Update health bar
         UpdateHealthBar();
         
         if (currentHealth <= 0)
@@ -50,12 +48,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Heal method for health kits
     public bool Heal(int healAmount)
     {
         if (isDead) return false;
         
-        // Check if healing is needed
         if (currentHealth >= maxHealth)
         {
             Debug.Log("Player is already at full health!");
@@ -69,7 +65,6 @@ public class PlayerHealth : MonoBehaviour
         int actualHealAmount = currentHealth - oldHealth;
         Debug.Log($"Player healed {actualHealAmount}! Current health: {currentHealth}");
         
-        // Update health bar
         UpdateHealthBar();
         
         return true;
@@ -88,40 +83,33 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         Debug.Log("Player has died!");
         
-        // Disable player controls and movement
         if (movementScript != null)
         {
             movementScript.enabled = false;
         }
         
-        // Stop any movement
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
         }
         
-        // Disable collider to prevent further interactions
         if (playerCollider != null)
         {
             playerCollider.enabled = false;
         }
         
-        // Create blood puff effect if assigned
         if (bloodPuffEffect != null)
         {
             Instantiate(bloodPuffEffect, transform.position, Quaternion.identity);
         }
-        
-        // Destroy the player GameObject
+
         Destroy(gameObject);
         
-        // Restart the scene after the specified delay
         Invoke("RestartScene", restartDelay);
     }
 
     void RestartScene()
     {
-        // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

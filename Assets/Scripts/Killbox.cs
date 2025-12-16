@@ -15,7 +15,7 @@ public class Killbox : MonoBehaviour
     {
         if (killboxCollider.CompareTag("Player"))
         {
-            Debug.Log("Lol. Lmao even");
+            Debug.Log("You have died!");
             playerHealth.Die();
         }
 
