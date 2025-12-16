@@ -115,8 +115,7 @@ public class SwordEnemy : MonoBehaviour
             isAttacking = true;
             animator.SetTrigger("Attack");
             lastAttackTime = Time.time;
-            
-            // Damage player
+
             Invoke("DealDamage", 0.5f);
             Invoke("ResetAttack", 1f);
         }

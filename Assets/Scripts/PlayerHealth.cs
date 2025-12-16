@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Settings")]
@@ -10,6 +13,9 @@ public class PlayerHealth : MonoBehaviour
     [Header("Death Settings")]
     public GameObject bloodPuffEffect;
     public float restartDelay = 2f;
+
+    [Header("UI Reference")]
+    public HealthBarUI healthBarUI;
 
     private Movement movementScript;
     private Animator animator;
@@ -24,6 +30,9 @@ public class PlayerHealth : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+        
+        // Update health bar on start
+        UpdateHealthBar();
     }
 
     public void TakeDamage(int damageAmount)
@@ -34,6 +43,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
         Debug.Log($"Player took {damageAmount} damage! Current health: {currentHealth}");
+        
+        // Update health bar
+        UpdateHealthBar();
         
         if (currentHealth <= 0)
         {
@@ -60,36 +72,59 @@ public class PlayerHealth : MonoBehaviour
         int actualHealAmount = currentHealth - oldHealth;
         Debug.Log($"Player healed {actualHealAmount}! Current health: {currentHealth}");
         
+        // Update health bar
+        UpdateHealthBar();
+        
         return true;
     }
 
-    void Die()
+    void UpdateHealthBar()
+    {
+        if (healthBarUI != null)
+        {
+            healthBarUI.SetHealth(currentHealth, maxHealth);
+        }
+    }
+
+    public void Die()
     {
         isDead = true;
         Debug.Log("Player has died!");
         
+        // Disable player controls and movement
         if (movementScript != null)
         {
             movementScript.enabled = false;
         }
         
+        // Stop any movement
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
         }
         
-  
+        // Disable collider to prevent further interactions
         if (playerCollider != null)
         {
             playerCollider.enabled = false;
         }
         
-
+        // Create blood puff effect if assigned
         if (bloodPuffEffect != null)
         {
             Instantiate(bloodPuffEffect, transform.position, Quaternion.identity);
         }
         
+        // Destroy the player GameObject after a short delay
         Destroy(gameObject, 0.1f);
+        
+        // Restart the scene after the specified delay
+        Invoke("RestartScene", restartDelay);
+    }
+
+    void RestartScene()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
