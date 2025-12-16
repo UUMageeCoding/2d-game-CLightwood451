@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Settings")]
@@ -53,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Updated Heal method that returns bool to indicate if healing occurred
+    // Heal method for health kits
     public bool Heal(int healAmount)
     {
         if (isDead) return false;
@@ -115,8 +112,8 @@ public class PlayerHealth : MonoBehaviour
             Instantiate(bloodPuffEffect, transform.position, Quaternion.identity);
         }
         
-        // Destroy the player GameObject after a short delay
-        Destroy(gameObject, 0.1f);
+        // Destroy the player GameObject
+        Destroy(gameObject);
         
         // Restart the scene after the specified delay
         Invoke("RestartScene", restartDelay);

@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "2d-game-CLightwood451-main.slnx"
+    "dotnet.defaultSolution": "2d-game-CLightwood451.slnx"
 }
